@@ -1,0 +1,19 @@
+
+
+Data Structures Notes
+---------------------------------------------------------------
+
+Lists
+---------------------------------------------------------------
+
+ArrayLists:
+
+	ArrayLists are good at adding to/ removing from the end of the list, and they're good at modifying an index that already exists (e.g. get/set).
+
+ArrayLists are bad at adding to/removing from the front.
+
+LinkedLists:
+
+	A linked list is a list made out of building blocks called list nodes. A list is a number of list nodes wired together using references.
+
+

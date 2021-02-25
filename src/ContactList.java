@@ -1,6 +1,7 @@
 package src;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class ContactList implements Iterable<Contact> {
@@ -13,7 +14,7 @@ public class ContactList implements Iterable<Contact> {
     }
 
     ContactList(Contact[] contacts) {
-        this.list =
+        this.list = (ArrayList<Contact>) Arrays.asList(contacts);
     }
 
     public Contact findByLastName(String last) {

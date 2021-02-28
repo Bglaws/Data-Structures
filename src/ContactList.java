@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 public class ContactList implements Iterable<Contact> {
 
-   public ArrayList<Contact> list;
+    public ArrayList<Contact> list;
 
     ContactList() {
         this.list = new ArrayList<Contact>();
@@ -18,8 +18,12 @@ public class ContactList implements Iterable<Contact> {
     }
 
     public Contact findByLastName(String last) {
-        
-        
+
+        for (int i : list) {
+            if (last.equals(list.getLast())) {
+
+            }
+        }
         return null;
 
     }
@@ -31,12 +35,12 @@ public class ContactList implements Iterable<Contact> {
 
     public ContactList findAllByLastInitial(char ch) {
         return null;
-        
+
     }
 
     public ContactList findAllByCity(String city) {
         return null;
-        
+
     }
 
     public boolean add(Contact c) {
@@ -49,7 +53,7 @@ public class ContactList implements Iterable<Contact> {
 
     public Contact remove(Object obj) {
         return null;
-    } 
+    }
 
     public Contact get(int index) {
         return null;
@@ -72,5 +76,5 @@ public class ContactList implements Iterable<Contact> {
     public static void main(String[] args) {
 
     }
-    
+
 }

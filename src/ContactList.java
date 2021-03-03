@@ -19,16 +19,37 @@ public class ContactList implements Iterable<Contact> {
 
     public Contact findByLastName(String last) {
 
-        for (int i : list) {
-            if (last.equals(list.getLast())) {
+        int lowest = 0;
+        int highest = this.size() - 1;
 
+        while (lowest <= highest) {
+            int middle = lowest + highest / 2;
+            Contact e = this.get(middle);
+
+            // Check if x is present at mid
+            if (last.equals(e.getLast())) {
+                return e;
             }
+
+            // If x greater, ignore left half
+            if (last.compareTo(e.getLast()) == 1) {
+                lowest = middle + 1;
+            }
+            // If x is smaller, ignore right half
+            else
+                highest = middle - 1;
         }
         return null;
-
     }
 
     public Contact findByPhoneNumber(String phone) {
+
+        int numContacts = this.size() - 1;
+        for (int i = 0; i < numContacts; i++) {
+            if (this.get(i).getNumber() == phone) {
+                return this.get(i);
+            }
+        }
         return null;
 
     }
@@ -48,7 +69,7 @@ public class ContactList implements Iterable<Contact> {
     }
 
     public int size() {
-        return 0;
+        return this.size();
     }
 
     public Contact remove(Object obj) {
@@ -56,11 +77,17 @@ public class ContactList implements Iterable<Contact> {
     }
 
     public Contact get(int index) {
-        return null;
+        return this.get(index);
     }
 
     public boolean equals(Object obj) {
-        return false;
+
+        for (ContactList l : this) {
+            if (l.equals(obj) == false) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public String toString() {
@@ -74,6 +101,11 @@ public class ContactList implements Iterable<Contact> {
     }
 
     public static void main(String[] args) {
+
+        Contact[] contacts = new Contact[10];
+
+        Contact a = new Contact("Brian", "Glaws", "(123) 456-7890", "2900 Beford Avenue", "Brooklyn", "NY");
+        ContactList listA = new ContactList(a);
 
     }
 

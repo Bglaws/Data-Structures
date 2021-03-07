@@ -54,7 +54,7 @@ public class Contact implements Comparable <Contact>{
     }
 
     // partial update
-    private void update(String first, String last, String number) {
+    public void update(String first, String last, String number) {
         this.first = first;
         this.last = last;
         this.number = number;
@@ -81,22 +81,6 @@ public class Contact implements Comparable <Contact>{
                 return 1;
             }
         }
-
-        aLength = this.getFirst().length();
-        bLength = o.getFirst().length();
-        if (aLength <= bLength) {
-            size = aLength;
-        }
-        else size = bLength;
-
-        for (int j = 0; j < size; j++) {
-            if (this.getFirst().charAt(j) < o.getFirst().charAt(j)) {
-                return -1;
-            }
-            if (this.getFirst().charAt(j) > o.getFirst().charAt(j)) {
-                return 1;
-            }
-        } 
         return 0;
     }
 
@@ -110,32 +94,6 @@ public class Contact implements Comparable <Contact>{
         }
         return this.getFirst() + " " + this.getLast() + "       Phone number: " + this.getNumber() +
         "\n" + this.getAddress() + "\n" + this.getCity() + ", " + this.getState();
-    }
-
-    public static void main(String[] args) {
-
-        Contact a = new Contact("Brian", "Glaws", "(123) 456-7890", "2900 Beford Avenue", "Brooklyn", "NY");
-        System.out.println(a);
-
-        Contact b = a;
-        System.out.println(a.compareTo(b));
-        System.out.println(a.equals(b));
-
-        a.update("Charlie", "Glaws", "(123) 456-7890", "10 New rd", "Sedona", "AZ");
-        System.out.println(a.compareTo(b));
-        System.out.println(a.equals(b));
-        System.out.println(a);
-        
-        a.update("Santa", "Claus", "(098) 765-4321", "123 Elf Road", "Northpole", "NJ");
-        System.out.println(a.compareTo(b));
-
-        Contact c = new Contact("Vito", "Corleone", "(111) 222-3333");
-        System.out.println(c);
-
-        c.update("Michael", "Corleone", "(333) 222-1111");
-        System.out.println(c);
-        System.out.println(c.compareTo(a));
-
     }
 
 }

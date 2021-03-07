@@ -15,29 +15,26 @@ public class ContactList implements Iterable<Contact> {
 
     ContactList(Contact[] contacts) {
         this.list = (ArrayList<Contact>) Arrays.asList(contacts);
+
     }
 
     public Contact findByLastName(String last) {
 
-        int lowest = 0;
-        int highest = this.size() - 1;
+        int firstElement = 0;
+        int lastElement = this.size() - 1;
 
-        while (lowest <= highest) {
-            int middle = lowest + highest / 2;
+        while (firstElement <= lastElement) {
+            int middle = firstElement + lastElement / 2;
             Contact e = this.get(middle);
 
-            // Check if x is present at mid
-            if (last.equals(e.getLast())) {
+            if (last.equalsIgnoreCase(e.getLast())) {
                 return e;
             }
-
-            // If x greater, ignore left half
             if (last.compareTo(e.getLast()) == 1) {
-                lowest = middle + 1;
+                firstElement = middle + 1;
             }
-            // If x is smaller, ignore right half
             else
-                highest = middle - 1;
+                lastElement = middle - 1;
         }
         return null;
     }
@@ -55,16 +52,57 @@ public class ContactList implements Iterable<Contact> {
     }
 
     public ContactList findAllByLastInitial(char ch) {
-        return null;
+
+        Iterator<Contact> it = iterator();
+        ContactList lastInitialList = new ContactList();
+
+        while (it.hasNext()) {
+            Contact contact = it.next();
+            if (ch == contact.getLast().charAt(0)) {
+                lastInitialList.add(contact);
+            }
+        }
+        return lastInitialList;
 
     }
 
     public ContactList findAllByCity(String city) {
-        return null;
 
+        Iterator<Contact> it = iterator();
+        ContactList allCityList = new ContactList();
+
+        while (it.hasNext()) {
+            Contact contact = it.next();
+            if (city == contact.getCity()) {
+                allCityList.add(contact);
+            }
+        }
+        return allCityList;
     }
 
     public boolean add(Contact c) {
+
+        if (this.list.isEmpty()) {
+            this.add(c);
+            return true;
+        }
+
+        int firstElement = 0;
+        int lastElement = this.size() - 1;
+
+        while (firstElement <= lastElement) {
+            int middle = firstElement + lastElement / 2;
+            Contact e = this.get(middle);
+
+            if (c.getLast().equalsIgnoreCase(e.getLast())) {
+                return e;
+            }
+            if (last.compareTo(e.getLast()) == 1) {
+                firstElement = middle + 1;
+            }
+            else
+                lastElement = middle - 1;
+        }
         return false;
     }
 
@@ -82,7 +120,7 @@ public class ContactList implements Iterable<Contact> {
 
     public boolean equals(Object obj) {
 
-        for (ContactList l : this) {
+        for (Contact l : this) {
             if (l.equals(obj) == false) {
                 return false;
             }
@@ -96,16 +134,42 @@ public class ContactList implements Iterable<Contact> {
 
     @Override
     public Iterator<Contact> iterator() {
-        // TODO Auto-generated method stub
-        return null;
+       return this.iterator();
     }
 
     public static void main(String[] args) {
 
-        Contact[] contacts = new Contact[10];
 
         Contact a = new Contact("Brian", "Glaws", "(123) 456-7890", "2900 Beford Avenue", "Brooklyn", "NY");
-        ContactList listA = new ContactList(a);
+        Contact b = new Contact("Charlie", "Glaws", "(123) 456-7890", "10 New rd", "Sedona", "AZ");
+        Contact c = new Contact("Santa", "Claus", "(098) 765-4321", "123 Elf Road", "Northpole", "NJ");
+        Contact[] contacts = {a,b,c};
+       
+       
+        ContactList listA = new ContactList(contacts);
+        ContactList listB = new ContactList(contacts);
+
+        Contact a = new Contact("Brian", "Glaws", "(123) 456-7890", "2900 Beford Avenue", "Brooklyn", "NY");
+        System.out.println(a);
+
+        Contact b = a;
+        System.out.println(a.compareTo(b));
+        System.out.println(a.equals(b));
+
+        a.update("Charlie", "Glaws", "(123) 456-7890", "10 New rd", "Sedona", "AZ");
+        System.out.println(a.compareTo(b));
+        System.out.println(a.equals(b));
+        System.out.println(a);
+        
+        a.update("Santa", "Claus", "(098) 765-4321", "123 Elf Road", "Northpole", "NJ");
+        System.out.println(a.compareTo(b));
+
+        Contact c = new Contact("Vito", "Corleone", "(111) 222-3333");
+        System.out.println(c);
+
+        c.update("Michael", "Corleone", "(333) 222-1111");
+        System.out.println(c);
+        System.out.println(c.compareTo(a));
 
     }
 

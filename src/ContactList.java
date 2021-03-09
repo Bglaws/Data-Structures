@@ -14,26 +14,29 @@ public class ContactList implements Iterable<Contact> {
     }
 
     ContactList(Contact[] contacts) {
-        this.list = (ArrayList<Contact>) Arrays.asList(contacts);
+        this.list = new ArrayList<Contact>();
 
+        for (int i = 0; i < contacts.length; i++) {
+            this.list.add(contacts[i]);
+        }
     }
 
     public Contact findByLastName(String last) {
 
+        int middle;
         int firstElement = 0;
         int lastElement = this.size() - 1;
 
         while (firstElement <= lastElement) {
-            int middle = firstElement + lastElement / 2;
+            middle = firstElement + (lastElement - 1) / 2;
             Contact e = this.get(middle);
 
-            if (last.equalsIgnoreCase(e.getLast())) {
+            if (last.equals(e.getLast())) {
                 return e;
             }
             if (last.compareTo(e.getLast()) == 1) {
                 firstElement = middle + 1;
-            }
-            else
+            } else
                 lastElement = middle - 1;
         }
         return null;
@@ -87,6 +90,40 @@ public class ContactList implements Iterable<Contact> {
             return true;
         }
 
+        int middle;
+        int firstElement = 0;
+        int lastElement = this.size() - 1;
+
+        while (firstElement <= lastElement) {
+            middle = firstElement + (lastElement - 1) / 2;
+            Contact e = this.get(middle);
+
+            if (firstElement == lastElement) {
+                if (c.compareTo(e) == 1) {
+                    this.list.add(firstElement + 1, c);
+                    return true;
+                } else
+                    this.list.add(firstElement - 1, c);
+                return true;
+            }
+
+            if (c.getLast().equals(e.getLast())) {
+                return false;
+            }
+            if (c.compareTo(e) == 1) {
+                firstElement = middle + 1;
+            } else
+                lastElement = middle - 1;
+        }
+        return false;
+    }
+
+    public int size() {
+        return this.list.size();
+    }
+
+    public Contact remove(Object obj) {
+
         int firstElement = 0;
         int lastElement = this.size() - 1;
 
@@ -94,34 +131,27 @@ public class ContactList implements Iterable<Contact> {
             int middle = firstElement + lastElement / 2;
             Contact e = this.get(middle);
 
-            if (c.getLast().equalsIgnoreCase(e.getLast())) {
+            if (obj.compareTo(e) == 0) {
+                this.list.remove(e);
                 return e;
             }
-            if (last.compareTo(e.getLast()) == 1) {
+            if (obj.compareTo(e) == 1) {
                 firstElement = middle + 1;
-            }
-            else
+            } else
                 lastElement = middle - 1;
         }
-        return false;
-    }
-
-    public int size() {
-        return this.size();
-    }
-
-    public Contact remove(Object obj) {
         return null;
     }
 
     public Contact get(int index) {
-        return this.get(index);
+        return this.list.get(index);
     }
 
     public boolean equals(Object obj) {
 
-        for (Contact l : this) {
-            if (l.equals(obj) == false) {
+        Iterator<Contact> it = this.list.iterator();
+        while (it.hasNext()) {
+            if (it.next().equals(obj) == false) {
                 return false;
             }
         }
@@ -129,47 +159,43 @@ public class ContactList implements Iterable<Contact> {
     }
 
     public String toString() {
+        Iterator<Contact> it = this.list.iterator();
+        while (it.hasNext()) {
+            System.out.println(it.next().toString());
+        }
+
         return null;
     }
 
     @Override
     public Iterator<Contact> iterator() {
-       return this.iterator();
+        return this.list.iterator();
     }
 
     public static void main(String[] args) {
 
-
         Contact a = new Contact("Brian", "Glaws", "(123) 456-7890", "2900 Beford Avenue", "Brooklyn", "NY");
-        Contact b = new Contact("Charlie", "Glaws", "(123) 456-7890", "10 New rd", "Sedona", "AZ");
+        Contact b = new Contact("Charlie", "Glaws", "(123) 456-7890", "10 New Road", "Sedona", "AZ");
         Contact c = new Contact("Santa", "Claus", "(098) 765-4321", "123 Elf Road", "Northpole", "NJ");
-        Contact[] contacts = {a,b,c};
-       
-       
-        ContactList listA = new ContactList(contacts);
-        ContactList listB = new ContactList(contacts);
+        Contact d = new Contact("Michael", "Jordan", "(111) 222-3333", "Bulls Avenue", "Chicago", "IL");
+        Contact e = new Contact("Michael", "Corleone", "(404) 443-8080", "Mafia Boulevard", "Little Italy", "NY");
+        Contact f = new Contact("Luke", "Skywalker", "(003) 909-1003", "Mos Eisley", "Tatooine", "CA");
+        Contact g = new Contact("Emily", "Lion", "(313) 411-9111", "Knickerbocker Street", "Lake Tahoe", "NV");
 
-        Contact a = new Contact("Brian", "Glaws", "(123) 456-7890", "2900 Beford Avenue", "Brooklyn", "NY");
-        System.out.println(a);
+        Contact[] contactsA = { a, b, c };
+        Contact[] contactsB = { a, b, c };
+        Contact[] contactsC = { a, b, c, d, e, f, g };
 
-        Contact b = a;
-        System.out.println(a.compareTo(b));
-        System.out.println(a.equals(b));
+        // identical lists
+        ContactList listA = new ContactList(contactsA);
+        ContactList listB = new ContactList(contactsB);
+        ContactList listC = new ContactList(contactsC);
 
-        a.update("Charlie", "Glaws", "(123) 456-7890", "10 New rd", "Sedona", "AZ");
-        System.out.println(a.compareTo(b));
-        System.out.println(a.equals(b));
-        System.out.println(a);
-        
-        a.update("Santa", "Claus", "(098) 765-4321", "123 Elf Road", "Northpole", "NJ");
-        System.out.println(a.compareTo(b));
+        listA.equals(listB);
+        listA.add(g);
+        listA.toString();
 
-        Contact c = new Contact("Vito", "Corleone", "(111) 222-3333");
-        System.out.println(c);
-
-        c.update("Michael", "Corleone", "(333) 222-1111");
-        System.out.println(c);
-        System.out.println(c.compareTo(a));
+        // listC.toString();
 
     }
 

@@ -16,7 +16,7 @@ public class ContactList implements Iterable<Contact> {
         this.list = new ArrayList<Contact>();
 
         for (int i = 0; i < contacts.length; i++) {
-            this.list.add(contacts[i]);
+            this.add(contacts[i]);
         }
     }
 
@@ -28,16 +28,20 @@ public class ContactList implements Iterable<Contact> {
         Contact e;
 
         while (firstElement <= lastElement) {
-            middle = firstElement + (lastElement - 1) / 2;
+            middle = firstElement + (lastElement - firstElement) / 2;
             e = this.get(middle);
 
             if (last.equals(e.getLast())) {
                 return e;
             }
-            if (last.compareTo(e.getLast()) == 1) {
+            if (last.compareTo(e.getLast()) > 0) {
                 firstElement = middle + 1;
-            } else
-                lastElement = middle - 1;
+            } else {
+                if (middle == 0) {
+                    lastElement = middle;
+                } else
+                    lastElement = middle - 1;
+            }
         }
         return null;
     }
@@ -61,7 +65,6 @@ public class ContactList implements Iterable<Contact> {
         Contact contact;
         while (it.hasNext()) {
             contact = it.next();
-            // == works for char
             if (ch == contact.getLast().charAt(0)) {
                 lastInitialList.list.add(contact);
             }
@@ -96,25 +99,33 @@ public class ContactList implements Iterable<Contact> {
         int lastElement = this.size() - 1;
 
         while (firstElement <= lastElement) {
-            middle = firstElement + (lastElement - 1) / 2;
+            middle = firstElement + (lastElement - firstElement) / 2;
             Contact e = this.get(middle);
 
             if (firstElement == lastElement) {
-                if (c.compareTo(e) == 1) {
+
+                if (c.compareTo(e) == 0) {
+                    return false;
+                } else if (c.compareTo(e) == 1) {
                     this.list.add(firstElement + 1, c);
                     return true;
-                } else
-                    this.list.add(firstElement - 1, c);
-                return true;
+                } else {
+                    this.list.add(firstElement, c);
+                    return true;
+                }
             }
 
-            if (c.getLast().equals(e.getLast())) {
+            if (c.compareTo(e) == 0) {
                 return false;
-            }
-            if (c.compareTo(e) == 1) {
+            } else if (c.compareTo(e) == 1) {
                 firstElement = middle + 1;
-            } else
-                lastElement = middle - 1;
+            } else {
+                if (middle == 0) {
+                    lastElement = middle;
+                } else
+                    lastElement = middle - 1;
+            }
+
         }
         return false;
     }
@@ -150,12 +161,12 @@ public class ContactList implements Iterable<Contact> {
 
     public boolean equals(Object obj) {
 
-        if (obj instanceof ContactList == false || this.size() != ((ContactList)obj).size()) {
+        if (obj instanceof ContactList == false || this.size() != ((ContactList) obj).size()) {
             return false;
         }
         Iterator<Contact> it = this.list.iterator();
-        Iterator<Contact> otherIt = ((ContactList)obj).list.iterator();
-        
+        Iterator<Contact> otherIt = ((ContactList) obj).list.iterator();
+
         while (it.hasNext()) {
             if (it.next().equals(otherIt.next()) == false) {
                 return false;
@@ -165,12 +176,11 @@ public class ContactList implements Iterable<Contact> {
     }
 
     public String toString() {
-        Iterator<Contact> it = this.list.iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next().toString());
+        String s = "";
+        for (Contact l : this) {
+            s += "\n" + l;
         }
-
-        return null;
+        return s;
     }
 
     @Override
@@ -187,6 +197,7 @@ public class ContactList implements Iterable<Contact> {
         Contact e = new Contact("Michael", "Corleone", "(404) 443-8080", "Mafia Boulevard", "Little Italy", "NY");
         Contact f = new Contact("Luke", "Skywalker", "(003) 909-1003", "Mos Eisley", "Tatooine", "CA");
         Contact g = new Contact("Emily", "Lion", "(313) 411-9111", "Knickerbocker Street", "Lake Tahoe", "NV");
+        Contact h = new Contact("Emperor", "Zurg", "(666) 666-6666", "Evil Way", "Xrghthung", "Galactic Empire");
 
         Contact[] contactsA = { a, b, c };
         Contact[] contactsB = { a, b, c };
@@ -196,29 +207,31 @@ public class ContactList implements Iterable<Contact> {
         ContactList listB = new ContactList(contactsB);
         ContactList listC = new ContactList(contactsC);
         ContactList listD = new ContactList();
-        
-        //adding Contact to empty list
+
+        // adding Contact to empty list
         System.out.println(listD.add(e));
-        
-        //calling equals method before and after adding to identical lists
+
+        // calling equals method before and after adding to identical lists
         System.out.println(listA.equals(listB));
         listA.add(g);
         System.out.println(listA.equals(listB));
 
+        System.out.println(listC.findByPhoneNumber("(111) 222-3333"));
+
+        System.out.println(listA.findAllByCity("New York"));
+
+        listC.add(h);
+
         System.out.println(listC.toString());
 
-        // System.out.println(listC.findByPhoneNumber("(111) 222-3333"));
-
-        // System.out.println(listA.findAllByCity("New York"));
-
         System.out.println(listC.findAllByLastInitial('C'));
-        
+
         System.out.println(listC.findByLastName("Skywalker"));
 
-        System.out.println(listB.remove(c)); 
-       
-        // listA.toString();
-        // listC.toString();
+        System.out.println(listB.remove(c));
+
+        listA.toString();
+        listC.toString();
 
     }
 

@@ -1,7 +1,7 @@
 package src;
 
-public class Contact implements Comparable <Contact>{
-    
+public class Contact implements Comparable<Contact> {
+
     private String first;
     private String last;
     private String number;
@@ -27,18 +27,23 @@ public class Contact implements Comparable <Contact>{
     public String getFirst() {
         return this.first;
     }
+
     public String getLast() {
         return this.last;
     }
+
     public String getNumber() {
         return this.number;
     }
+
     public String getAddress() {
         return this.address;
     }
+
     public String getCity() {
         return this.city;
     }
+
     public String getState() {
         return this.state;
     }
@@ -70,14 +75,29 @@ public class Contact implements Comparable <Contact>{
 
         if (aLength <= bLength) {
             size = aLength;
-        }
-        else size = bLength;
-  
+        } else
+            size = bLength;
+
         for (int i = 0; i < size; i++) {
-            if (this.getLast().charAt(i) < o.getLast().charAt(i)){
+            if (this.getLast().charAt(i) < o.getLast().charAt(i)) {
                 return -1;
             }
-            if (this.getLast().charAt(i) > o.getLast().charAt(i)){
+            if (this.getLast().charAt(i) > o.getLast().charAt(i)) {
+                return 1;
+            }
+        }
+        aLength = this.getFirst().length();
+        bLength = o.getFirst().length();
+        if (aLength <= bLength) {
+            size = aLength;
+        } else
+            size = bLength;
+
+        for (int j = 0; j < size; j++) {
+            if (this.getFirst().charAt(j) < o.getFirst().charAt(j)) {
+                return -1;
+            }
+            if (this.getFirst().charAt(j) > o.getFirst().charAt(j)) {
                 return 1;
             }
         }
@@ -92,8 +112,8 @@ public class Contact implements Comparable <Contact>{
         if (this.getAddress() == null || this.getCity() == null || this.getState() == null) {
             return this.getFirst() + " " + this.getLast() + "       Phone number: " + this.getNumber();
         }
-        return this.getFirst() + " " + this.getLast() + "       Phone number: " + this.getNumber() +
-        "\n" + this.getAddress() + "\n" + this.getCity() + ", " + this.getState();
+        return this.getFirst() + " " + this.getLast() + "       Phone number: " + this.getNumber() + "\n"
+                + this.getAddress() + "\n" + this.getCity() + ", " + this.getState();
     }
 
 }

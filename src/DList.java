@@ -54,20 +54,45 @@ public class DList implements Iterable<String> {
 
     public String get(int index) {
         String s = "";
-        DListNode temp;
-        while (index > 0) {
-            if (nil.next == nil) {
+        if (nil.next == nil) {
+            throw new IndexOutOfBoundsException("aint no vitamins in that shit");
+        }
+        DListNode temp = nil;
+        while (index >= 0) {
+
+            temp = temp.next;
+
+            if (index == 0) {
+                s = temp.data;
+            }
+            index--;
+            if (temp.next == nil) {
                 throw new IndexOutOfBoundsException("aint no vitamins in that shit");
             }
-
         }
         return s;
     }
 
+    // TODO
+    public String set(int index, String value) {
+        return null;
+    }
+
+    public boolean contains(Object obj) {
+        return false;
+    }
+
+    public int size() {
+        return 0;
+    }
+
+    public int indexOf(Object obj) {
+        return 0;
+    }
+
     @Override
     public Iterator<String> iterator() {
-        // TODO Auto-generated method stub
-        return null;
+        return iterator();
     }
 
     private static class DListNode {

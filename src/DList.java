@@ -53,46 +53,82 @@ public class DList implements Iterable<String> {
     }
 
     public String get(int index) {
-        String s = "";
-        if (nil.next == nil) {
+        DListNode temp;
+
+        if(nil.next == nil) {
             throw new IndexOutOfBoundsException("aint no vitamins in that shit");
+        } else {
+            temp = nil.next;
         }
-        DListNode temp = nil;
-        while (index >= 0) {
 
+        while (index > 0) {
             temp = temp.next;
-
-            if (index == 0) {
-                s = temp.data;
-            }
-            index--;
-            if (temp.next == nil) {
+            if (temp == nil) {
                 throw new IndexOutOfBoundsException("aint no vitamins in that shit");
             }
+            index--;
         }
-        return s;
+        return temp.data;
     }
 
-    // TODO
+    // returns old value
     public String set(int index, String value) {
-        return null;
+        DListNode temp;
+        if(nil.next == nil) {
+            throw new IndexOutOfBoundsException("aint no vitamins in that shit");
+        } else {
+            temp = nil.next;
+        }
+       
+        while(index > 0) {
+            temp = temp.next;
+            if (temp == nil) {
+                throw new IndexOutOfBoundsException("aint no vitamins in that shit");
+            }
+            index--;
+        }
+        String o = temp.data;
+        temp.data = value;
+        return o;
     }
 
     public boolean contains(Object obj) {
+        DListNode temp = nil.next;
+        while(temp != nil) {
+            if (temp.data == obj) {
+                return true;
+            }
+            temp = temp.next;
+        }
         return false;
     }
 
     public int size() {
-        return 0;
+        int count = 0;
+        DListNode temp = nil.next;
+        while (temp != nil) {
+            temp = temp.next;
+            count++;
+        }
+        return count;
     }
 
     public int indexOf(Object obj) {
-        return 0;
+        int count = 0;
+        DListNode temp = nil.next;
+        while (temp != nil) {
+            if (temp.data.equals(obj)) {
+                return count;
+            } else {
+                count++;
+            }
+        }
+        return count = -1;
     }
 
     @Override
     public Iterator<String> iterator() {
-        return iterator();
+        return new DListIterator();
     }
 
     private static class DListNode {
@@ -113,14 +149,18 @@ public class DList implements Iterable<String> {
 
         @Override
         public boolean hasNext() {
-            // TODO Auto-generated method stub
-            return false;
+            if (this.pointer == nil) {
+                return false;
+            } else {
+                return true;
+            }
         }
 
         @Override
         public String next() {
-            // TODO Auto-generated method stub
-            return null;
+            DListNode temp = this.pointer;
+            this.pointer = this.pointer.next;
+            return temp.data;
         }
 
     }
@@ -128,8 +168,25 @@ public class DList implements Iterable<String> {
     public static void main(String[] args) {
 
         DList a = new DList();
-        String elem = "My first node!";
-        a.addFirst(elem);
+        DList b = new DList();
+
+        String elem1 = "My first node!";
+        String elem2 = "My first node!";
+        String elem3 = "My first node!";
+        String elem4 = "My first node!";
+        String elem5 = "My first node!";
+
+        a.addFirst(elem1);
+        a.addFirst(elem2);
+        a.addLast(elem3);
+
+        DListIterator it = (DListIterator) a.iterator();
+        System.out.println(it.next());
+
+        b.addFirst(elem4);
+        b.addFirst(elem5);
+
+        
     }
 
 }

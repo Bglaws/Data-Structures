@@ -20,6 +20,7 @@ public class DList implements Iterable<String> {
         nil.next.previous = nil;
         nil.next.data = elem;
         nil.next.next = temp;
+        temp.previous = nil.next;
     }
 
     public void addLast(String elem) {
@@ -28,6 +29,7 @@ public class DList implements Iterable<String> {
         nil.previous.next = nil;
         nil.previous.data = elem;
         nil.previous.previous = temp;
+        temp.next = nil.previous;
     }
 
     public String getFirst() {
@@ -75,7 +77,7 @@ public class DList implements Iterable<String> {
     public String set(int index, String value) {
         DListNode temp;
         if(nil.next == nil) {
-            throw new IndexOutOfBoundsException("aint no vitamins in that shit");
+            throw new IndexOutOfBoundsException();
         } else {
             temp = nil.next;
         }
@@ -83,7 +85,7 @@ public class DList implements Iterable<String> {
         while(index > 0) {
             temp = temp.next;
             if (temp == nil) {
-                throw new IndexOutOfBoundsException("aint no vitamins in that shit");
+                throw new IndexOutOfBoundsException();
             }
             index--;
         }
@@ -151,13 +153,15 @@ public class DList implements Iterable<String> {
         public boolean hasNext() {
             if (this.pointer == nil) {
                 return false;
-            } else {
-                return true;
-            }
+            } 
+            return true;
         }
 
         @Override
         public String next() {
+            if(!hasNext()){
+                return null;
+            }
             DListNode temp = this.pointer;
             this.pointer = this.pointer.next;
             return temp.data;
@@ -170,22 +174,50 @@ public class DList implements Iterable<String> {
         DList a = new DList();
         DList b = new DList();
 
-        String elem1 = "My first node!";
-        String elem2 = "My first node!";
-        String elem3 = "My first node!";
-        String elem4 = "My first node!";
-        String elem5 = "My first node!";
+        String elem1 = "P";
+        String elem2 = "O";
+        String elem3 = "P";
+        String elem4 = "C";
+        String elem5 = "O";
+        String elem6 = "R";
+        String elem7 = "N";
 
         a.addFirst(elem1);
         a.addFirst(elem2);
-        a.addLast(elem3);
+        a.addFirst(elem3);
+        a.addLast(elem4);
+        a.addLast(elem5);
+        a.addLast(elem6);
+        a.addLast(elem7);
+        
+        Iterator<String> it = a.iterator();
+        while (it.hasNext()) {
+            System.out.println(it.next());
+        }
+        System.out.println();
 
-        DListIterator it = (DListIterator) a.iterator();
-        System.out.println(it.next());
+        a.removeFirst();
+        a.removeFirst();
+        a.set(0, "S");        
 
-        b.addFirst(elem4);
-        b.addFirst(elem5);
+        it = a.iterator();
+        while (it.hasNext()) {
+            System.out.println(it.next());
+        }
+        System.out.println();
 
+        System.out.println(a.get(a.size() - 1) + "\n");
+        a.removeLast();
+        a.addLast("E");
+
+        it = a.iterator();
+        while (it.hasNext()) {
+            System.out.println(it.next());
+        }
+        System.out.println();
+
+        System.out.println(a.contains("O"));
+        System.out.println(a.indexOf("S"));
         
     }
 

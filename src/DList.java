@@ -2,9 +2,9 @@ package src;
 
 import java.util.Iterator;
 
-public class DList implements Iterable<String> {
+public class DList<E> implements Iterable<E> {
 
-    private DListNode nil;
+    private DListNode<E> nil;
 
     public DList() {
         nil = new DListNode();
@@ -14,7 +14,7 @@ public class DList implements Iterable<String> {
     }
 
     // nil -> null
-    public void addFirst(String elem) {
+    public void addFirst(E elem) {
         DListNode temp = nil.next;
         nil.next = new DListNode();
         nil.next.previous = nil;
@@ -32,29 +32,29 @@ public class DList implements Iterable<String> {
         temp.next = nil.previous;
     }
 
-    public String getFirst() {
-        return nil.next.data;
+    public E getFirst() {
+        return (E) nil.next.data;
     }
 
-    public String getLast() {
-        return nil.previous.data;
+    public E getLast() {
+        return (E) nil.previous.data;
     }
 
-    public String removeFirst() {
+    public E removeFirst() {
         DListNode temp = nil.next;
         nil.next = temp.next;
         temp.next.previous = nil;
-        return temp.data;
+        return (E) temp.data;
     }
 
-    public String removeLast() {
+    public E removeLast() {
         DListNode temp = nil.previous;
         nil.previous = temp.previous;
         temp.previous.next = nil;
-        return temp.data;
+        return (E) temp.data;
     }
 
-    public String get(int index) {
+    public E get(int index) {
         DListNode temp;
 
         if(nil.next == nil) {
@@ -70,11 +70,11 @@ public class DList implements Iterable<String> {
             }
             index--;
         }
-        return temp.data;
+        return (E) temp.data;
     }
 
     // returns old value
-    public String set(int index, String value) {
+    public E set(int index, E value) {
         DListNode temp;
         if(nil.next == nil) {
             throw new IndexOutOfBoundsException();
@@ -89,7 +89,7 @@ public class DList implements Iterable<String> {
             }
             index--;
         }
-        String o = temp.data;
+        E o = (E) temp.data;
         temp.data = value;
         return o;
     }
@@ -129,17 +129,17 @@ public class DList implements Iterable<String> {
     }
 
     @Override
-    public Iterator<String> iterator() {
+    public Iterator<E> iterator() {
         return new DListIterator();
     }
 
-    private static class DListNode {
-        public String data;
+    private static class DListNode<T> {
+        public T data;
         public DListNode next;
         public DListNode previous;
     }
 
-    private class DListIterator implements Iterator<String> {
+    private class DListIterator implements Iterator<E> {
         private DListNode pointer;
 
         public DListIterator() {
@@ -158,13 +158,13 @@ public class DList implements Iterable<String> {
         }
 
         @Override
-        public String next() {
+        public E next() {
             if(!hasNext()){
                 return null;
             }
             DListNode temp = this.pointer;
             this.pointer = this.pointer.next;
-            return temp.data;
+            return (E) temp.data;
         }
 
     }

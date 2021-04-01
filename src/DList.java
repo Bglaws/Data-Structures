@@ -149,7 +149,7 @@ public class DList<E>
     public E get(int index) {
         DListNode temp;
 
-        if(nil.next == nil) {
+        if (nil.next == nil) {
             throw new IndexOutOfBoundsException("aint no vitamins in that shit");
         } else {
             temp = nil.next;
@@ -168,13 +168,13 @@ public class DList<E>
     // returns old value
     public E set(int index, E value) {
         DListNode temp;
-        if(nil.next == nil) {
+        if (nil.next == nil) {
             throw new IndexOutOfBoundsException();
         } else {
             temp = nil.next;
         }
-       
-        while(index > 0) {
+
+        while (index > 0) {
             temp = temp.next;
             if (temp == nil) {
                 throw new IndexOutOfBoundsException();
@@ -188,7 +188,7 @@ public class DList<E>
 
     public boolean contains(Object obj) {
         DListNode temp = nil.next;
-        while(temp != nil) {
+        while (temp != nil) {
             if (temp.data == obj) {
                 return true;
             }
@@ -224,7 +224,4 @@ public class DList<E>
     public Iterator<E> iterator() {
         return new DListIterator();
     }
-
-   
-
 }

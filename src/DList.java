@@ -2,20 +2,22 @@ package src;
 
 import java.util.*;
 import java.io.Serializable;
-import java.lang.reflect.Array;
 
-public class DList<E> 
+public class DList<E>
 
-    implements Iterable, List<E>, Deque<E>, Cloneable, Serializable {
+        implements List<E>, Deque<E>, Cloneable, Serializable {
 
-    private DListNode<E> nil;
+    private static final long serialVersionUID = 1L;
+    private DListNode nil;
 
-    private static class DListNode<T> {
-        public T data;
+    // DListNode data
+    private static class DListNode<E> {
+        public E data;
         public DListNode next;
         public DListNode previous;
     }
 
+    // DList Iterator class
     private class DListIterator implements Iterator<E> {
         private DListNode pointer;
 
@@ -30,13 +32,13 @@ public class DList<E>
         public boolean hasNext() {
             if (this.pointer == nil) {
                 return false;
-            } 
+            }
             return true;
         }
 
         @Override
         public E next() {
-            if(!hasNext()){
+            if (!hasNext()) {
                 return null;
             }
             DListNode temp = this.pointer;
@@ -66,7 +68,7 @@ public class DList<E>
         a.addLast(elem5);
         a.addLast(elem6);
         a.addLast(elem7);
-        
+
         Iterator<String> it = a.iterator();
         while (it.hasNext()) {
             System.out.println(it.next());
@@ -75,7 +77,7 @@ public class DList<E>
 
         a.removeFirst();
         a.removeFirst();
-        a.set(0, "S");        
+        a.set(0, "S");
 
         it = a.iterator();
         while (it.hasNext()) {
@@ -95,9 +97,10 @@ public class DList<E>
 
         System.out.println(a.contains("O"));
         System.out.println(a.indexOf("S"));
-        
+
     }
 
+    // DList constructor
     public DList() {
         nil = new DListNode();
         nil.previous = nil;
@@ -105,7 +108,6 @@ public class DList<E>
         nil.data = null;
     }
 
-    // nil -> null
     public void addFirst(E elem) {
         DListNode temp = nil.next;
         nil.next = new DListNode();
@@ -223,5 +225,209 @@ public class DList<E>
     @Override
     public Iterator<E> iterator() {
         return new DListIterator();
+    }
+
+    @Override
+    public void addLast(E e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public boolean offerFirst(E e) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean offerLast(E e) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public E pollFirst() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public E pollLast() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public E peekFirst() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public E peekLast() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public boolean removeFirstOccurrence(Object o) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean removeLastOccurrence(Object o) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean offer(E e) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public E remove() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public E poll() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public E element() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public E peek() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void push(E e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public E pop() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Iterator<E> descendingIterator() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public Object[] toArray() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public <T> T[] toArray(T[] a) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public boolean add(E e) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends E> c) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean addAll(int index, Collection<? extends E> c) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void clear() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void add(int index, E element) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public E remove(int index) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public ListIterator<E> listIterator() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ListIterator<E> listIterator(int index) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<E> subList(int fromIndex, int toIndex) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

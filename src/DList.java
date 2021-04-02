@@ -8,18 +8,19 @@ public class DList<E>
         implements List<E>, Deque<E>, Cloneable, Serializable {
 
     private static final long serialVersionUID = 1L;
-    private DListNode nil;
+    private int size;
+    private DListNode<E> nil;
 
     // DListNode data
     private static class DListNode<E> {
         public E data;
-        public DListNode next;
-        public DListNode previous;
+        public DListNode<E> next;
+        public DListNode<E> previous;
     }
 
     // DList Iterator class
     private class DListIterator implements Iterator<E> {
-        private DListNode pointer;
+        private DListNode<E> pointer;
 
         public DListIterator() {
             if (nil.next == nil)
@@ -41,7 +42,7 @@ public class DList<E>
             if (!hasNext()) {
                 return null;
             }
-            DListNode temp = this.pointer;
+            DListNode<E> temp = this.pointer;
             this.pointer = this.pointer.next;
             return (E) temp.data;
         }
@@ -102,28 +103,10 @@ public class DList<E>
 
     // DList constructor
     public DList() {
-        nil = new DListNode();
+        nil = new DListNode<E>();
         nil.previous = nil;
         nil.next = nil;
         nil.data = null;
-    }
-
-    public void addFirst(E elem) {
-        DListNode temp = nil.next;
-        nil.next = new DListNode();
-        nil.next.previous = nil;
-        nil.next.data = elem;
-        nil.next.next = temp;
-        temp.previous = nil.next;
-    }
-
-    public void addLast(String elem) {
-        DListNode temp = nil.previous;
-        nil.previous = new DListNode();
-        nil.previous.next = nil;
-        nil.previous.data = elem;
-        nil.previous.previous = temp;
-        temp.next = nil.previous;
     }
 
     public E getFirst() {
@@ -134,22 +117,50 @@ public class DList<E>
         return (E) nil.previous.data;
     }
 
+    public void addFirst(E elem) {
+        DListNode<E> temp = nil.next;
+        nil.next = new DListNode<E>();
+        nil.next.previous = nil;
+        nil.next.data = elem;
+        nil.next.next = temp;
+        temp.previous = nil.next;
+        size++;
+    }
+
+    public void addLast(E elem) {
+        DListNode<E> temp = nil.previous;
+        nil.previous = new DListNode<E>();
+        nil.previous.next = nil;
+        nil.previous.data = elem;
+        nil.previous.previous = temp;
+        temp.next = nil.previous;
+        size++;
+    }
+
     public E removeFirst() {
-        DListNode temp = nil.next;
+        if (isEmpty()) {
+            throw new NoSuchElementException("Empty list");
+        }
+        DListNode<E> temp = nil.next;
         nil.next = temp.next;
         temp.next.previous = nil;
+        size--;
         return (E) temp.data;
     }
 
     public E removeLast() {
-        DListNode temp = nil.previous;
+        if (isEmpty()) {
+            throw new NoSuchElementException("Empty list");
+        }
+        DListNode<E> temp = nil.previous;
         nil.previous = temp.previous;
         temp.previous.next = nil;
+        size--;
         return (E) temp.data;
     }
 
     public E get(int index) {
-        DListNode temp;
+        DListNode<E> temp;
 
         if (nil.next == nil) {
             throw new IndexOutOfBoundsException("aint no vitamins in that shit");
@@ -169,7 +180,7 @@ public class DList<E>
 
     // returns old value
     public E set(int index, E value) {
-        DListNode temp;
+        DListNode<E> temp;
         if (nil.next == nil) {
             throw new IndexOutOfBoundsException();
         } else {
@@ -189,7 +200,7 @@ public class DList<E>
     }
 
     public boolean contains(Object obj) {
-        DListNode temp = nil.next;
+        DListNode<E> temp = nil.next;
         while (temp != nil) {
             if (temp.data == obj) {
                 return true;
@@ -200,18 +211,12 @@ public class DList<E>
     }
 
     public int size() {
-        int count = 0;
-        DListNode temp = nil.next;
-        while (temp != nil) {
-            temp = temp.next;
-            count++;
-        }
-        return count;
+        return size;
     }
 
     public int indexOf(Object obj) {
         int count = 0;
-        DListNode temp = nil.next;
+        DListNode<E> temp = nil.next;
         while (temp != nil) {
             if (temp.data.equals(obj)) {
                 return count;
@@ -228,69 +233,88 @@ public class DList<E>
     }
 
     @Override
-    public void addLast(E e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
     public boolean offerFirst(E e) {
-        // TODO Auto-generated method stub
-        return false;
+        addFirst(e);
+        return true;
     }
 
     @Override
     public boolean offerLast(E e) {
-        // TODO Auto-generated method stub
-        return false;
+        addLast(e);
+        return true;
     }
 
     @Override
     public E pollFirst() {
-        // TODO Auto-generated method stub
-        return null;
+        return removeFirst();
     }
 
     @Override
     public E pollLast() {
-        // TODO Auto-generated method stub
-        return null;
+        return removeLast();
+    }
+
+    @Override
+    public E peek() {
+        if (isEmpty()) {
+            return null;
+        }
+        return getFirst();
     }
 
     @Override
     public E peekFirst() {
-        // TODO Auto-generated method stub
-        return null;
+        return peek();
     }
 
     @Override
     public E peekLast() {
-        // TODO Auto-generated method stub
-        return null;
+        if (isEmpty()) {
+            return null;
+        }
+        return getLast();
     }
 
     @Override
-    public boolean removeFirstOccurrence(Object o) {
-        // TODO Auto-generated method stub
+    public E remove() {
+        return removeFirst();
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        int target = indexOf(o);
+        if (target >= 0) {
+            remove(target);
+            return true;
+        }
         return false;
     }
 
     @Override
+    public boolean removeFirstOccurrence(Object o) {
+        return remove(o);
+    }
+
+    @Override
     public boolean removeLastOccurrence(Object o) {
-        // TODO Auto-generated method stub
+        DListNode<E> temp = nil.previous;
+        int target = size - 1;
+        while (temp != nil) {
+            if (temp.data.equals(o)) {
+                remove(target);
+                return true;
+            } else {
+                target--;
+                temp = temp.previous;
+            }
+        }
         return false;
     }
 
     @Override
     public boolean offer(E e) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public E remove() {
-        // TODO Auto-generated method stub
-        return null;
+        addLast(e);
+        return true;
     }
 
     @Override
@@ -301,12 +325,6 @@ public class DList<E>
 
     @Override
     public E element() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public E peek() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -349,12 +367,6 @@ public class DList<E>
 
     @Override
     public boolean add(E e) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean remove(Object o) {
         // TODO Auto-generated method stub
         return false;
     }

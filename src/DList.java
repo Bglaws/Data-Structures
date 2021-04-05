@@ -3,9 +3,7 @@ package src;
 import java.util.*;
 import java.io.Serializable;
 
-public class DList<E>
-
-        implements List<E>, Deque<E>, Cloneable, Serializable {
+public class DList<E> implements List<E>, Deque<E>, Cloneable, Serializable {
 
     private static final long serialVersionUID = 1L;
     private int size;
@@ -49,58 +47,6 @@ public class DList<E>
 
     }
 
-    public static void main(String[] args) {
-
-        DList a = new DList();
-        DList b = new DList();
-
-        String elem1 = "P";
-        String elem2 = "O";
-        String elem3 = "P";
-        String elem4 = "C";
-        String elem5 = "O";
-        String elem6 = "R";
-        String elem7 = "N";
-
-        a.addFirst(elem1);
-        a.addFirst(elem2);
-        a.addFirst(elem3);
-        a.addLast(elem4);
-        a.addLast(elem5);
-        a.addLast(elem6);
-        a.addLast(elem7);
-
-        Iterator<String> it = a.iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next());
-        }
-        System.out.println();
-
-        a.removeFirst();
-        a.removeFirst();
-        a.set(0, "S");
-
-        it = a.iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next());
-        }
-        System.out.println();
-
-        System.out.println(a.get(a.size() - 1) + "\n");
-        a.removeLast();
-        a.addLast("E");
-
-        it = a.iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next());
-        }
-        System.out.println();
-
-        System.out.println(a.contains("O"));
-        System.out.println(a.indexOf("S"));
-
-    }
-
     // DList constructor
     public DList() {
         nil = new DListNode<E>();
@@ -110,11 +56,17 @@ public class DList<E>
     }
 
     public E getFirst() {
-        return (E) nil.next.data;
+        if (isEmpty()) {
+            throw new NoSuchElementException("Empty list");
+        }
+        return (E) nil.next;
     }
 
     public E getLast() {
-        return (E) nil.previous.data;
+        if (isEmpty()) {
+            throw new NoSuchElementException("Empty list");
+        }
+        return (E) nil.previous;
     }
 
     public void addFirst(E elem) {
@@ -232,6 +184,9 @@ public class DList<E>
         return new DListIterator();
     }
 
+
+    // Extra Credit
+
     @Override
     public boolean offerFirst(E e) {
         addFirst(e);
@@ -319,26 +274,25 @@ public class DList<E>
 
     @Override
     public E poll() {
-        // TODO Auto-generated method stub
-        return null;
+        if (isEmpty()) {
+            return null;
+        }
+        return removeFirst();
     }
 
     @Override
     public E element() {
-        // TODO Auto-generated method stub
-        return null;
+        return getFirst();
     }
 
     @Override
     public void push(E e) {
-        // TODO Auto-generated method stub
-
+        addFirst(e);
     }
 
     @Override
     public E pop() {
-        // TODO Auto-generated method stub
-        return null;
+        return removeFirst();
     }
 
     @Override
@@ -349,7 +303,9 @@ public class DList<E>
 
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
+        if (nil.next == nil) {
+            return true;
+        }
         return false;
     }
 

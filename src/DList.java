@@ -130,7 +130,7 @@ public class DList<E> implements List<E>, Deque<E>, Cloneable, Serializable {
         return (E) temp.data;
     }
 
-    // returns old value
+    // replaces and returns old value
     public E set(int index, E value) {
         DListNode<E> temp;
         if (nil.next == nil) {
@@ -323,14 +323,14 @@ public class DList<E> implements List<E>, Deque<E>, Cloneable, Serializable {
 
     @Override
     public boolean add(E e) {
-        // TODO Auto-generated method stub
-        return false;
+        addLast(e);
+        return true;
     }
 
     @Override
-    public boolean containsAll(Collection<?> c) {
-        // TODO Auto-generated method stub
-        return false;
+    public void add(int index, E element) {
+        // needs to create new node
+
     }
 
     @Override
@@ -358,13 +358,13 @@ public class DList<E> implements List<E>, Deque<E>, Cloneable, Serializable {
     }
 
     @Override
-    public void clear() {
+    public boolean containsAll(Collection<?> c) {
         // TODO Auto-generated method stub
-
+        return false;
     }
 
     @Override
-    public void add(int index, E element) {
+    public void clear() {
         // TODO Auto-generated method stub
 
     }

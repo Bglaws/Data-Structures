@@ -184,7 +184,6 @@ public class DList<E> implements List<E>, Deque<E>, Cloneable, Serializable {
         return new DListIterator();
     }
 
-
     // Extra Credit
 
     @Override
@@ -296,29 +295,11 @@ public class DList<E> implements List<E>, Deque<E>, Cloneable, Serializable {
     }
 
     @Override
-    public Iterator<E> descendingIterator() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public boolean isEmpty() {
         if (nil.next == nil) {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public Object[] toArray() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public <T> T[] toArray(T[] a) {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     @Override
@@ -389,6 +370,24 @@ public class DList<E> implements List<E>, Deque<E>, Cloneable, Serializable {
 
     @Override
     public ListIterator<E> listIterator(int index) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Iterator<E> descendingIterator() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Object[] toArray() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public <T> T[] toArray(T[] a) {
         // TODO Auto-generated method stub
         return null;
     }

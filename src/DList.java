@@ -311,19 +311,51 @@ public class DList<E> implements List<E>, Deque<E>, Cloneable, Serializable {
     @Override
     public void add(int index, E element) {
         // needs to create new node
+        // iterate to index
+        DListNode<E> temp = nil;
 
+        while (index - 1 > 0) {
+            temp = temp.next;
+            if (temp == nil) {
+                throw new IndexOutOfBoundsException();
+            }
+            index--;
+        }
+
+        DListNode<E> newNode = new DListNode<E>();
+
+        newNode.next = temp.next;
+        temp.next.previous = newNode;
+        newNode.previous = temp;
+        temp.next = newNode;
+        newNode.data = element;
+        size++;
     }
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        // TODO Auto-generated method stub
-        return false;
+
+        c.forEach((E elem) -> {
+            add(elem);
+        });
+        return true;
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        // TODO Auto-generated method stub
-        return false;
+        DListNode<E> temp = nil;
+
+        while (index - 1 > 0) {
+            temp = temp.next;
+            if (temp == nil) {
+                throw new IndexOutOfBoundsException();
+            }
+            index--;
+        }
+        c.forEach((E elem) -> {
+            add(elem);
+        });
+        return true;
     }
 
     @Override
@@ -346,8 +378,8 @@ public class DList<E> implements List<E>, Deque<E>, Cloneable, Serializable {
 
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
-
+        nil.next = nil;
+        nil.previous = nil;
     }
 
     @Override

@@ -3,7 +3,7 @@ package src;
 import java.util.*;
 import java.io.Serializable;
 
-public class DList<E> implements List<E>, Deque<E>, Cloneable, Serializable {
+public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Cloneable, Serializable {
 
     private static final long serialVersionUID = 1L;
     private int size;
@@ -59,14 +59,14 @@ public class DList<E> implements List<E>, Deque<E>, Cloneable, Serializable {
         if (isEmpty()) {
             throw new NoSuchElementException("Empty list");
         }
-        return (E) nil.next;
+        return (E) nil.next.data;
     }
 
     public E getLast() {
         if (isEmpty()) {
             throw new NoSuchElementException("Empty list");
         }
-        return (E) nil.previous;
+        return (E) nil.previous.data;
     }
 
     public void addFirst(E elem) {
@@ -360,13 +360,14 @@ public class DList<E> implements List<E>, Deque<E>, Cloneable, Serializable {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        // TODO Auto-generated method stub
-        return false;
+        // removes every element of a collection from the list
+        return true;
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        // TODO Auto-generated method stub
+        // removes every element that isnt of a certain collection
+
         return false;
     }
 

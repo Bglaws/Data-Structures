@@ -385,8 +385,23 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
 
     @Override
     public E remove(int index) {
-        // TODO Auto-generated method stub
-        return null;
+        DListNode<E> temp = nil;
+        while (index - 1 > 0) {
+            temp = temp.next;
+            if (temp == nil) {
+                throw new IndexOutOfBoundsException();
+            }
+            index--;
+        }
+        DListNode<E> newNode = new DListNode<E>();
+
+        //fix this code!
+        newNode.next = temp.next;
+        temp.next.previous = newNode;
+        newNode.previous = temp;
+        temp.next = newNode;
+        newNode.data = element;
+        size--;
     }
 
     @Override
@@ -415,14 +430,19 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
 
     @Override
     public Object[] toArray() {
-        // TODO Auto-generated method stub
-        return null;
+        Object[] arr = new Object[size];
+        DListNode<E> temp = nil.next;
+
+        for (int i = 0; temp != nil.next; i++) {
+            arr[i] = temp;
+            temp = temp.next;
+        }
+        return arr;
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-        // TODO Auto-generated method stub
-        return null;
+        
     }
 
     @Override

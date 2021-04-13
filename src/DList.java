@@ -314,7 +314,7 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
         // iterate to index
         DListNode<E> temp = nil;
 
-        while (index - 1 > 0) {
+        while (index > 0) {
             temp = temp.next;
             if (temp == nil) {
                 throw new IndexOutOfBoundsException();
@@ -386,28 +386,34 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
     @Override
     public E remove(int index) {
         DListNode<E> temp = nil;
-        while (index - 1 > 0) {
+        while (index > 0) {
             temp = temp.next;
             if (temp == nil) {
                 throw new IndexOutOfBoundsException();
             }
             index--;
         }
-        DListNode<E> newNode = new DListNode<E>();
-
-        //fix this code!
-        newNode.next = temp.next;
-        temp.next.previous = newNode;
-        newNode.previous = temp;
-        temp.next = newNode;
-        newNode.data = element;
+        
+        temp.next = temp.previous;
+        temp.previous = temp.next;
         size--;
+        return (E) temp.data;
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        // TODO Auto-generated method stub
-        return 0;
+        DListNode temp = nil;
+
+        for (int target = size() - 1; target > 0; target--) {
+            temp = temp.previous;
+            if (temp == nil) {
+                return -1;
+            }
+            if (temp.data == o) {
+                return target;
+            }
+        }
+        return -1;
     }
 
     @Override

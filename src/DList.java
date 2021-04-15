@@ -17,22 +17,23 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
     }
 
     // DList Iterator class
-    private class DListIterator implements Iterator<E> {
-        private DListNode<E> pointer;
+    private class DListIterator implements ListIterator<E> {
+        private DListNode<E> next;
+        private DListNode<E> prev;
+        private DListNode<E> lastElement;
+        private int iterIndex;
 
-        public DListIterator() {
+        public DListIterator(int index) {
             if (nil.next == nil)
-                pointer = nil;
+                next = nil;
             else
-                pointer = nil.next;
+                next = nil.next;
+            iterIndex = index;
         }
 
         @Override
         public boolean hasNext() {
-            if (this.pointer == nil) {
-                return false;
-            }
-            return true;
+            return (next != nil);
         }
 
         @Override
@@ -40,9 +41,51 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
             if (!hasNext()) {
                 return null;
             }
-            DListNode<E> temp = this.pointer;
-            this.pointer = this.pointer.next;
-            return (E) temp.data;
+            lastElement = next;
+            next = next.next;
+            return (E) lastElement.data;
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return (prev != nil);
+        }
+
+        @Override
+        public E previous() {
+            if (!hasPrevious()) {
+                return null;
+            }
+            lastElement = prev;
+            prev = prev.previous;
+            return (E) lastElement.data;
+        }
+
+        @Override
+        public int nextIndex() {
+            return iterIndex;
+        }
+
+        @Override
+        public int previousIndex() {
+            return iterIndex - 1;
+        }
+
+        @Override
+        public void remove() {
+            // TODO
+        }
+
+        @Override
+        public void set(E e) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void add(E e) {
+            // TODO Auto-generated method stub
+
         }
 
     }
@@ -53,6 +96,11 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
         nil.previous = nil;
         nil.next = nil;
         nil.data = null;
+    }
+
+    public DList(Collection<? extends E> c) {
+        this();
+        addAll(c);
     }
 
     public E getFirst() {
@@ -177,11 +225,6 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
             }
         }
         return count = -1;
-    }
-
-    @Override
-    public Iterator<E> iterator() {
-        return new DListIterator();
     }
 
     // Extra Credit
@@ -359,25 +402,6 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
     }
 
     @Override
-    public boolean removeAll(Collection<?> c) {
-        // removes every element of a collection from the list
-        return true;
-    }
-
-    @Override
-    public boolean retainAll(Collection<?> c) {
-        // removes every element that isnt of a certain collection
-
-        return false;
-    }
-
-    @Override
-    public boolean containsAll(Collection<?> c) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
     public void clear() {
         nil.next = nil;
         nil.previous = nil;
@@ -393,7 +417,7 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
             }
             index--;
         }
-        
+
         temp.next = temp.previous;
         temp.previous = temp.next;
         size--;
@@ -417,15 +441,11 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
     }
 
     @Override
-    public ListIterator<E> listIterator() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public ListIterator<E> listIterator(int index) {
-        // TODO Auto-generated method stub
-        return null;
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException("Invalid index");
+        }
+        return (ListIterator<E>) new DListIterator(index);
     }
 
     @Override
@@ -448,12 +468,7 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
 
     @Override
     public <T> T[] toArray(T[] a) {
-        
-    }
+        return a;
 
-    @Override
-    public List<E> subList(int fromIndex, int toIndex) {
-        // TODO Auto-generated method stub
-        return null;
     }
 }

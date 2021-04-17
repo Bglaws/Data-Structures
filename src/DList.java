@@ -43,6 +43,7 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
             }
             lastElement = next;
             next = next.next;
+            iterIndex++;
             return (E) lastElement.data;
         }
 
@@ -58,6 +59,7 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
             }
             lastElement = prev;
             prev = prev.previous;
+            iterIndex--;
             return (E) lastElement.data;
         }
 
@@ -73,19 +75,33 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
 
         @Override
         public void remove() {
-            // TODO
+            next = lastElement.next;
+            prev = lastElement.previous;
+            DList.this.remove(iterIndex);
+            lastElement = null;
+            iterIndex--;
         }
 
         @Override
         public void set(E e) {
-            // TODO Auto-generated method stub
-
+            if (lastElement == null) {
+                throw new IllegalStateException("Last element is null");
+            }
+            lastElement.data = e;
         }
 
         @Override
         public void add(E e) {
-            // TODO Auto-generated method stub
-
+            DListNode<E> newNode = new DListNode<E>();
+            newNode.data = e;
+            newNode.next = next;
+            newNode.previous = prev;
+            next.previous = newNode;
+            prev.next = newNode;
+            prev = newNode;
+            lastElement = null;
+            size++;
+            iterIndex++;
         }
 
     }
@@ -288,6 +304,23 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
     }
 
     @Override
+    public E remove(int index) {
+        DListNode<E> temp = nil;
+        while (index > 0) {
+            temp = temp.next;
+            if (temp == nil) {
+                throw new IndexOutOfBoundsException();
+            }
+            index--;
+        }
+
+        temp.next = temp.previous;
+        temp.previous = temp.next;
+        size--;
+        return (E) temp.data;
+    }
+
+    @Override
     public boolean removeFirstOccurrence(Object o) {
         return remove(o);
     }
@@ -405,23 +438,6 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
     public void clear() {
         nil.next = nil;
         nil.previous = nil;
-    }
-
-    @Override
-    public E remove(int index) {
-        DListNode<E> temp = nil;
-        while (index > 0) {
-            temp = temp.next;
-            if (temp == nil) {
-                throw new IndexOutOfBoundsException();
-            }
-            index--;
-        }
-
-        temp.next = temp.previous;
-        temp.previous = temp.next;
-        size--;
-        return (E) temp.data;
     }
 
     @Override

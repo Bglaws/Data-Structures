@@ -17,12 +17,17 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
     }
 
     // DList Iterator class
+
+    // Is it possible to rewrite the iterator class so it can be used as a descending iterator
     private class DListIterator implements ListIterator<E> {
         private DListNode<E> next;
         private DListNode<E> prev;
         private DListNode<E> lastElement;
         private int iterIndex;
 
+        // need to fix this constructor
+        // need to iterate to the index provided and check that it is valid
+        // next should be set to this node
         public DListIterator(int index) {
             if (nil.next == nil)
                 next = nil;
@@ -75,6 +80,9 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
 
         @Override
         public void remove() {
+            if (lastElement == null) {
+                throw new IllegalArgumentException("last element is null");
+            }
             next = lastElement.next;
             prev = lastElement.previous;
             DList.this.remove(iterIndex);

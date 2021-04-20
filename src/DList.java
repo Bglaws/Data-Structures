@@ -1,4 +1,4 @@
-package src;
+
 
 import java.util.*;
 import java.io.Serializable;
@@ -17,22 +17,15 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
     }
 
     // DList Iterator class
-
-    // Is it possible to rewrite the iterator class so it can be used as a descending iterator
     private class DListIterator implements ListIterator<E> {
         private DListNode<E> next;
         private DListNode<E> prev;
         private DListNode<E> lastElement;
         private int iterIndex;
 
-        // need to fix this constructor
-        // need to iterate to the index provided and check that it is valid
-        // next should be set to this node
-        public DListIterator(int index) {
-            if (nil.next == nil)
-                next = nil;
-            else
-                next = nil.next;
+        // Constructor 
+        public DListIterator(DListNode<E> startNode, int index) {
+            next = startNode;
             iterIndex = index;
         }
 
@@ -76,6 +69,100 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
         @Override
         public int previousIndex() {
             return iterIndex - 1;
+        }
+
+        @Override
+        public void remove() {
+            if (lastElement == null) {
+                throw new IllegalArgumentException("last element is null");
+            }
+            next = lastElement.next;
+            prev = lastElement.previous;
+            DList.this.remove(iterIndex);
+            lastElement = null;
+            iterIndex--;
+        }
+
+        @Override
+        public void set(E e) {
+            if (lastElement == null) {
+                throw new IllegalStateException("Last element is null");
+            }
+            lastElement.data = e;
+        }
+
+        @Override
+        public void add(E e) {
+            DListNode<E> newNode = new DListNode<E>();
+            newNode.data = e;
+            newNode.next = next;
+            newNode.previous = prev;
+            next.previous = newNode;
+            prev.next = newNode;
+            prev = newNode;
+            lastElement = null;
+            size++;
+            iterIndex++;
+        }
+
+    }
+
+
+
+
+     // Descending DList Iterator class
+     private class DescendingDListIterator implements ListIterator<E> {
+        private DListNode<E> next;
+        private DListNode<E> prev;
+        private DListNode<E> lastElement;
+        private int iterIndex;
+
+        // Constructor
+        public DescendingDListIterator(DListNode<E> startNode) {
+            next = startNode;
+            iterIndex = size() - 1;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return (next != nil);
+        }
+
+        @Override
+        public E next() {
+            if (!hasNext()) {
+                return null;
+            }
+            lastElement = next;
+            next = next.previous;
+            iterIndex--;
+            return (E) lastElement.data;
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return (prev != nil);
+        }
+
+        @Override
+        public E previous() {
+            if (!hasPrevious()) {
+                return null;
+            }
+            lastElement = prev;
+            prev = prev.next;
+            iterIndex++;
+            return (E) lastElement.data;
+        }
+
+        @Override
+        public int nextIndex() {
+            return iterIndex;
+        }
+
+        @Override
+        public int previousIndex() {
+            return iterIndex + 1;
         }
 
         @Override
@@ -450,7 +537,7 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
 
     @Override
     public int lastIndexOf(Object o) {
-        DListNode temp = nil;
+        DListNode<E> temp = nil;
 
         for (int target = size() - 1; target > 0; target--) {
             temp = temp.previous;
@@ -469,13 +556,22 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
         if (index < 0 || index >= size()) {
             throw new IndexOutOfBoundsException("Invalid index");
         }
-        return (ListIterator<E>) new DListIterator(index);
+        int i = index;
+        DListNode<E> temp = nil.next;
+        while (i > 0) {
+             temp = temp.next;
+             i--;
+        }
+        return (ListIterator<E>) new DListIterator(temp, index);
     }
 
     @Override
     public Iterator<E> descendingIterator() {
-        // TODO Auto-generated method stub
-        return null;
+        DListNode<E> temp = nil. previous;
+        if (temp == nil) {
+            throw new NoSuchElementException("Empty list");
+        }
+        return (ListIterator<E>) new DescendingDListIterator(temp);
     }
 
     @Override

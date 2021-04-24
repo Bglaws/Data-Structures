@@ -1,10 +1,10 @@
+import java.util.ListIterator;
 
-
-public class DListTest {
+public class DListTest<E> extends DList<E> {
     public static void main(String[] args) {
 
-        DList a = new DList();
-        DList b = new DList();
+        DList<String> a = new DList<String>();
+        DList<Integer> b = new DList<Integer>();
 
         String elem1 = "P";
         String elem2 = "O";
@@ -14,6 +14,8 @@ public class DListTest {
         String elem6 = "R";
         String elem7 = "N";
 
+        int elem8 = 1;
+
         a.addFirst(elem1);
         a.addFirst(elem2);
         a.addFirst(elem3);
@@ -22,34 +24,23 @@ public class DListTest {
         a.addLast(elem6);
         a.addLast(elem7);
 
-        Iterator<String> it = a.iterator();
-        while (it.hasNext()) {
+        b.addFirst(elem8);
+
+        ListIterator<String> it = a.listIterator();
+        
+        while(it.hasNext()) {
             System.out.println(it.next());
         }
-        System.out.println();
+        
+        System.out.println("\n------- \n");
 
-        a.removeFirst();
-        a.removeFirst();
-        a.set(0, "S");
+        ListIterator<String> descendingIt = a.descendingIterator();
 
-        it = a.iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next());
+        while (descendingIt.hasNext()) {
+            System.out.println(descendingIt.next());
         }
-        System.out.println();
-
-        System.out.println(a.get(a.size() - 1) + "\n");
-        a.removeLast();
-        a.addLast("E");
-
-        it = a.iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next());
-        }
-        System.out.println();
-
-        System.out.println(a.contains("O"));
-        System.out.println(a.indexOf("S"));
+        
+        //String[] arr = (String[]) a.toArray();
 
     }
 }

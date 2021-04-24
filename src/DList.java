@@ -108,8 +108,6 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
     }
 
 
-
-
      // Descending DList Iterator class
      private class DescendingDListIterator implements ListIterator<E> {
         private DListNode<E> next;
@@ -566,7 +564,7 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
     }
 
     @Override
-    public Iterator<E> descendingIterator() {
+    public ListIterator<E> descendingIterator() {
         DListNode<E> temp = nil. previous;
         if (temp == nil) {
             throw new NoSuchElementException("Empty list");
@@ -587,8 +585,19 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
     }
 
     @Override
-    public <T> T[] toArray(T[] a) {
+    public <E> E[] toArray(E[] a) {
+        
+        if (a.length < size()) {
+            a = (E[])java.lang.reflect.Array.newInstance
+            (a.getClass().getComponentType(), size);
+        }
+      
+        DListNode temp = nil.next;
+        for (int i = 0; temp != nil; i++) {
+            
+                a[i] = (E) temp.data;
+                temp = temp.next;
+        }
         return a;
-
     }
 }

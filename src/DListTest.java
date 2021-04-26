@@ -1,4 +1,6 @@
+
 import java.util.ListIterator;
+
 
 public class DListTest<E> extends DList<E> {
     public static void main(String[] args) {
@@ -40,7 +42,7 @@ public class DListTest<E> extends DList<E> {
             System.out.println(descendingIt.next());
         }
         
-        //String[] arr = (String[]) a.toArray();
+        String[] arr = (String[]) a.toArray();
 
     }
 }

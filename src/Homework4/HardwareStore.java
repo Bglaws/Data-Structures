@@ -1,4 +1,4 @@
-package Homework4;
+package src.Homework4;
 
 public class HardwareStore {
 
@@ -15,7 +15,7 @@ public class HardwareStore {
     }
 
     double totalRevenue() {
-        return -1; 
+        return -1;
     }
 
 }

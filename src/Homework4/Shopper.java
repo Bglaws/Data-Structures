@@ -1,4 +1,4 @@
-package Homework4;
+package src.Homework4;
 
 public class Shopper implements Comparable<Shopper> {
 
@@ -12,7 +12,7 @@ public class Shopper implements Comparable<Shopper> {
 
     int amountOwed() {
         return -1;
-        
+
     }
 
     public String toString() {

@@ -1,4 +1,4 @@
-package src.Homework4;
+package Homework4;
 
 public class Item {
     private String name;

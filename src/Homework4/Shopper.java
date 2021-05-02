@@ -14,29 +14,41 @@ public class Shopper implements Comparable<Shopper> {
 
     // adds specified number of items to this Shopper's cart
     void addItemToCart(Item item, int numItems) {
-        for (int i =0; i < numItems; i++) {
+        for (int i = 0; i < numItems; i++) {
             myCart.addItem(item);
         }
     }
-    /* overriden addItemToCart so when user
-    only wants to add one item they just say which item*/
+
+    /*
+     * overriden addItemToCart so when user only wants to add one item they just say
+     * which item
+     */
     void addItemToCart(Item item) {
         addItemToCart(item, 1);
     }
 
+    /*
+     * takes the sum of all items in shoppers cart, grandTotal(), applies the tax,
+     * and returns the total this shopper owes the hardware store
+     */
     int amountOwed() {
         return (int) Math.ceil(myCart.grandTotal() * 8.875);
     }
 
+    // String representation for this shoppers cart
     public String toString() {
-        String s = firstName + " " + lastName + 
-        "\'s shopping cart: " + myCart.toString();
+        String s = firstName + " " + lastName + "\'s shopping cart: " + myCart.toString();
         return s;
     }
 
+    // compareTo method for comparing the totals of 2 seperate shoppers
     @Override
     public int compareTo(Shopper o) {
-        // TODO Auto-generated method stub
+        if (this.amountOwed() > o.amountOwed()) {
+            return -1;
+        } else if (this.amountOwed() < o.amountOwed()) {
+            return 1;
+        }
         return 0;
     }
 }

@@ -13,7 +13,7 @@ public class Shopper implements Comparable<Shopper> {
     }
 
     // adds specified number of items to this Shopper's cart
-    void addItemToCart(Item item, int numItems) {
+    public void addItemToCart(Item item, int numItems) {
         for (int i = 0; i < numItems; i++) {
             myCart.addItem(item);
         }
@@ -23,7 +23,7 @@ public class Shopper implements Comparable<Shopper> {
      * overriden addItemToCart so when user only wants to add one item they just say
      * which item
      */
-    void addItemToCart(Item item) {
+    public void addItemToCart(Item item) {
         addItemToCart(item, 1);
     }
 
@@ -31,8 +31,8 @@ public class Shopper implements Comparable<Shopper> {
      * takes the sum of all items in shoppers cart, grandTotal(), applies the tax,
      * and returns the total this shopper owes the hardware store
      */
-    int amountOwed() {
-        return (int) Math.ceil(myCart.grandTotal() * 8.875);
+    public int amountOwed() {
+        return (int) Math.ceil((myCart.grandTotal() * 0.08875) + myCart.grandTotal());
     }
 
     // String representation for this shoppers cart

@@ -16,13 +16,13 @@ public class ShoppingCart {
      * adds items to end of this ShoppingCart and increments the number of items in
      * the list
      */
-    void addItem(Item item) {
+    public void addItem(Item item) {
         cart.addLast(item);
         numItems++;
     }
 
     // returns the sum of all the items in this ShoppingCart
-    int grandTotal() {
+    public int grandTotal() {
         for (Item i : cart) {
             sum += i.getPrice();
         }
@@ -30,7 +30,7 @@ public class ShoppingCart {
     }
 
     // returns number of items in this ShoppingCart
-    int numItems() {
+    public int numItems() {
         return numItems;
     }
 

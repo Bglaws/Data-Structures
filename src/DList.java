@@ -591,6 +591,9 @@ public class DList<E> extends AbstractSequentialList<E> implements Deque<E>, Clo
             a = (E[])java.lang.reflect.Array.newInstance
             (a.getClass().getComponentType(), size);
         }
+        else if (size() < a.length) {
+            a[size] = null;
+        }
       
         DListNode temp = nil.next;
         for (int i = 0; temp != nil; i++) {

@@ -1,1 +1,6 @@
-first last item numItem item NumItem
+Emily Jane Hammer 1 Nails 5 Wrench 2 Goggles 1 Drill 1 Screws 2
+Jon Snow Saw 1 Wood 4 SandPaper 5 Paint 5 
+Tyrion Lannister Pot 10 Soil 3 Shovel 1 Gloves 1
+Elora Nicole Grill 1 Wood 2 Axe 1
+Brian Reid Wood 4 Caulk 2 Saw 1 Paint 2 Ratpoison 2 Shears 1
+Theo Cerulean Wrench 2 Saw 1 Wood 4 Grill 1 Shears 1 Hammer 2 Nails 5 

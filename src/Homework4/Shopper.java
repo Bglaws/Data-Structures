@@ -32,7 +32,9 @@ public class Shopper implements Comparable<Shopper> {
      * and returns the total this shopper owes the hardware store
      */
     public int amountOwed() {
-        return (int) Math.ceil((myCart.grandTotal() * 0.08875) + myCart.grandTotal());
+        int sub = myCart.grandTotal();
+        float tax = (float) (sub*0.0875);
+        return sub + Math.round(tax);
     }
 
     // String representation for this shoppers cart

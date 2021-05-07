@@ -22,6 +22,6 @@ public class Item {
 
     // returns string representation of item
     public String toString() {
-        return "name: " + name + "price: " + price;
+        return "name: " + name + " price: " + price;
     }
 }

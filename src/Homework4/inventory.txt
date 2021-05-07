@@ -1,3 +1,20 @@
 Hammer 1450
-Nails 800
-
+Nails 400
+Wrench 700
+Drill 2500
+Screws 800
+Crowbar 1800
+Saw 2000
+Paint 1595
+SandPaper 300
+Goggles 1200
+Gloves 800
+Ratpoison 1000
+Shovel 1350
+Pot 400
+Soil 2900
+Axe 3450
+Shears 2400
+Caulk 600
+Wood 2000
+Grill 6000
